@@ -7,7 +7,6 @@ const url = require('url');
 const student_event = require('./ws_controller/student_event.ws');
 const { WebSocketServer } = require('ws');
 const driver_event = require('./ws_controller/driver_event.ws');
-const sockserver = new WebSocketServer({ port: 5000 })
 
 const app = express(); // Use the express module
 
@@ -33,6 +32,17 @@ app.get('/driver', (req, res) => {
 
 app.use('/api/v1/student', student_routes); // Students api module
 app.use('/api/v1/driver', driver_routes); // Drivers api module
+
+// 404 Error handler
+app.use((req, res, err) => {
+    res.statusCode = 404;
+    res.json({ error_code: 50, error_msg: 'Endpoint not found!' });
+});
+//-----------------------
+
+const server = app.listen(3000 || process.env.PORT_NUMBER); // Server listening at port 3000
+
+const sockserver = new WebSocketServer({ server });
 
 sockserver.on('connection', (socket, req) => {
   var token = url.parse(req.url, true).query.auth_token // Auth token
@@ -92,12 +102,3 @@ sockserver.on('connection', (socket, req) => {
     clearTimeout(interval);
   });
 });
-
-// 404 Error handler
-app.use((req, res, err) => {
-    res.statusCode = 404;
-    res.json({ error_code: 50, error_msg: 'Endpoint not found!' });
-});
-//-----------------------
-
-app.listen(3000 || process.env.PORT_NUMBER); // Server listening at port 3000
