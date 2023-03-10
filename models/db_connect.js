@@ -3,11 +3,13 @@ const mysql = require('mysql'); // Import mysql module
 // Create mysql connection pool
 const pool  = mysql.createPool({
     connectionLimit : process.env.CONNECTION_LIMIT,
-    host            : process.env.HOST,
+    host: 'mysql-114838-0.cloudclusters.net',
+    //host            : process.env.HOST,
     user            : process.env.USER,
-    password        : '',
+    password        : 'i0PDPYCk',
     database        : process.env.DATABASE,
     charset         : process.env.CHARSET,
+    port: 18221,  
     multipleStatements: true
 });
 //---------------------------------------
