@@ -12,7 +12,7 @@
 
     <script>
       const authToken = '50a2e2fb0b1c7e560eb307504679f0756fae881db2931af0810328104993fa76355b1160907801c1354ec2bceb3c97d07b3c80ba03c6156394fceb2aec19c07b2827b4e2f9c292c16b1118742fcb81d80f255c5aadd6ab92e5ca2ac390b17975969dc481076e29876c18efaaf9fbae73603999b6b95e08e0b240fc0cf5b99a7a8f11cad06a09dc5345266a2f8d77f180e40c242e19f8954d64245b268f9a5085c7512d4cc41f403ab963d46a3bb457690c01020eae0cfa06e3ac26dbac9f2655cd3167ccaf652c9d83214833590a28a2ac815331dfe7967036943a4ea2d175c5b670f1f5fd6293b4750cab12d9f8';
-      const webSocket = new WebSocket(`ws://babcock-transit.onrender.com/api/rides?auth_token=${authToken}`); // Websockets instance of an object
+      const webSocket = new WebSocket(`wss://babcock-transit.onrender.com/api/rides?auth_token=${authToken}`); // Websockets instance of an object
 
       // Recieve message from server
       webSocket.onmessage = (event) => {
