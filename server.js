@@ -40,7 +40,7 @@ app.use((req, res, err) => {
 });
 //-----------------------
 
-const server = app.listen(3000 || process.env.PORT_NUMBER); // Server listening at port 3000
+const server = app.listen(3000 || process.env.PORT); // Server listening at port 3000
 
 const sockserver = new WebSocketServer({ server });
 
