@@ -7,7 +7,7 @@ const url = require('url');
 const student_event = require('./ws_controller/student_event.ws');
 const { WebSocketServer } = require('ws');
 const driver_event = require('./ws_controller/driver_event.ws');
-const sockserver = new WebSocketServer({ port: 3000 || process.env.PORT_NUMBER })
+const sockserver = new WebSocketServer({ port: 5000 })
 
 const app = express(); // Use the express module
 
