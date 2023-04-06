@@ -50,6 +50,8 @@ const cancel_ride = async (req, res) => {
                                 res.json({ err_msg: 'An error just occured, Try again later', result: null, succ_msg: null, res_code: 400 });
                             } else if (result1.status === true){
                                 if (result1.data.length > 0 && result1.data.length === 1){
+                                    let driver_id = result1.data[0].driver_for_ride;
+                                    
                                     let result2 = await db_query.check_if_ride_has_not_started_or_has_started(transport_ride_id);
         
                                     if (result2.status === false){
@@ -63,8 +65,31 @@ const cancel_ride = async (req, res) => {
                                                 res.statusCode = 400;
                                                 res.json({ err_msg: 'An error just occured, Try again later', result: null, succ_msg: null, res_code: 400 });
                                             } else if (result3.status === true){
-                                                res.statusCode = 200;
-                                                res.json({ err_msg: null, result: null, succ_msg: 'This ride has been canceled successfully', res_code: 200 });
+                                                let result4 = await db_query.get_all_driver_details(driver_id);
+
+                                                if (result4.status === false){
+                                                    res.statusCode = 400;
+                                                    res.json({ err_msg: 'An error just occured, Try again later', result: null, succ_msg: null, res_code: 400 });
+                                                } else if (result4.status === true){
+                                                    let capacity = result4.data[0].capacity;
+
+                                                    if (capacity < 3){
+                                                        let updated_capacity = capacity + 1;
+
+                                                        let result5 = await db_query.increase_capacity(driver_id, updated_capacity);
+
+                                                        if (result5.status === false){
+                                                            res.statusCode = 400;
+                                                            res.json({ err_msg: 'An error just occured, Try again later3', result: null, succ_msg: null, res_code: 400 });
+                                                        } else if (result5.status === true){
+                                                            res.statusCode = 200;
+                                                            res.json({ err_msg: null, result: null, succ_msg: 'This ride has been canceled successfully', res_code: 200 });   
+                                                        }
+                                                    } else {
+                                                        res.statusCode = 200;
+                                                        res.json({ err_msg: null, result: null, succ_msg: 'This ride has been canceled successfully', res_code: 200 });   
+                                                    }
+                                                }
                                             }
                                         } else {
                                             res.statusCode = 400;
