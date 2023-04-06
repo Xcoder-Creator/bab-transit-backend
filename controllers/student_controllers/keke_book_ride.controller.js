@@ -1,4 +1,4 @@
-const db_query = require('../../models/db_model'); // Import db model
+const db_query = require('../../models/db_model'); // Import database model
 const sanitize_data = require('../../utility/sanitize_data.util'); // Import sanitize data
 const response_headers = require('../../utility/response_headers.util'); // Import response headers
 const card_validation = require('../../utility/card_validation.util'); // Import card validation
