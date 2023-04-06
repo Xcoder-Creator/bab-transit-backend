@@ -100,8 +100,31 @@ const modify_ride = async (req, res) => {
                                                     res.statusCode = 400;
                                                     res.json({ err_msg: 'An error just occured, Try again later', result: null, succ_msg: null, res_code: 400 });
                                                 } else if (result3.status === true){
-                                                    res.statusCode = 200;
-                                                    res.json({ err_msg: null, result: null, succ_msg: 'This ride has ended successfully', res_code: 200 });
+                                                    let result4 = await db_query.get_all_driver_details(driver_id);
+
+                                                    if (result4.status === false){
+                                                        res.statusCode = 400;
+                                                        res.json({ err_msg: 'An error just occured, Try again later', result: null, succ_msg: null, res_code: 400 });
+                                                    } else if (result4.status === true){
+                                                        let capacity = result4.data[0].capacity;
+
+                                                        if (capacity < 3){
+                                                            let updated_capacity = capacity + 1;
+
+                                                            let result5 = await db_query.increase_capacity(driver_id, updated_capacity);
+
+                                                            if (result5.status === false){
+                                                                res.statusCode = 400;
+                                                                res.json({ err_msg: 'An error just occured, Try again later', result: null, succ_msg: null, res_code: 400 });
+                                                            } else if (result5.status === true){
+                                                                res.statusCode = 200;
+                                                                res.json({ err_msg: null, result: null, succ_msg: 'This ride has ended successfully', res_code: 200 });
+                                                            }
+                                                        } else {
+                                                            res.statusCode = 200;
+                                                            res.json({ err_msg: null, result: null, succ_msg: 'This ride has ended successfully', res_code: 200 });
+                                                        }
+                                                    }
                                                 }
                                             } else {
                                                 res.statusCode = 400;
