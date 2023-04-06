@@ -1013,6 +1013,25 @@ var update_all_driver_rides = (driver_id) => {
 }
 //------------------------------------------
 
+// Increase driver vehicle capacity in the database
+var increase_capacity = (driver_id, updated_capacity) => {
+    return new Promise((resolve, reject) => {
+        pool.getConnection(async (err, connection) => {
+            if(err) throw err
+            connection.query('UPDATE driver_account_details SET capacity = ? WHERE driver_id = ?;', [ updated_capacity, driver_id ], async (err, rows) => {
+                connection.release() // return the connection to pool
+
+                if (err) {
+                    return resolve({ status: false });
+                } else {
+                    return resolve({ status: true });
+                }
+            })
+        });
+    });
+}
+//------------------------------------------
+
 // Export all the functions above
 module.exports = {
     fetch_student_hostels,
@@ -1067,6 +1086,7 @@ module.exports = {
     get_all_student_available_rides,
     update_all_student_rides,
     get_all_driver_available_rides,
-    update_all_driver_rides
+    update_all_driver_rides,
+    increase_capacity
 }
 //----------------------------------
