@@ -1,31 +1,6 @@
 const express = require('express'); // Import express
 const router = express.Router(); // Use express router object
 const cors = require('cors'); // Import cors module
-const multer = require('multer'); // Import multer module
-
-// Set up folder that multer can use to upload files to
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/')
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname)
-  }
-})
-//-----------------------------------------
-
-// Set up multer with options to prepare for file upload
-const upload = multer({ storage: storage, limits: { fileSize: 5000000 }, fileFilter: (req, file, callback) => {
-    const allowedMimes = ['image/jpeg', 'image/png', 'application/pdf'];
-
-    if (allowedMimes.includes(file.mimetype)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Invalid file type'));
-    }
-  } 
-})
-//------------------------------------------------
 
 // Import the required controllers
 const register_controller = require('../controllers/driver_controllers/register_driver.controller');
@@ -39,7 +14,7 @@ const ride_details_controller = require('../controllers/driver_controllers/ride_
 //-----------------------------------------
 
 // Register account POST handler
-router.post('/register', upload.single('file'), register_controller);
+router.post('/register', register_controller);
 
 // Verify account POST handler
 router.post('/verify-account', verify_account_controller);
