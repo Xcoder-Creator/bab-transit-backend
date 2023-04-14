@@ -26,7 +26,7 @@ const signup = async (req, res) => {
             var matric_no = sanitize_data(form_data.matric_no);
             var user_name = sanitize_data(form_data.name);
             var user_gender = sanitize_data(form_data.gender).toLowerCase();
-            var user_hostel = parseInt(sanitize_data(form_data.hostel));
+            var user_hostel = parseInt(form_data.hostel);
             //-------------------------------------------------------------------
             
             // Validate the data inputs from the form data
