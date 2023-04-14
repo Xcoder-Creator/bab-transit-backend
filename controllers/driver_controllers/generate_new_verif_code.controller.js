@@ -38,7 +38,7 @@ const generate_new_verif_code = async (req, res) => {
                             res.statusCode = 400;
                             res.json({ err_msg: 'An error just occured, Try again later', result: null, succ_msg: null, res_code: 400 }); 
                         } else if (result2.status === true){
-                            let verification_code = gen_code(6);
+                            let verification_code = gen_code(5);
 
                             let verif_token = generate_access_token(driver_id, 'verification_code', 300);
 
