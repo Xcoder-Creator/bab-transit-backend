@@ -11,9 +11,7 @@ const cors = require('cors');
 
 const app = express(); // Use the express module
 
-app.use(cors({
-  origin: 'http://localhost:8100'
-}))
+app.use(cors());
 
 app.set('view engine', 'ejs'); // Register view engine of choice. Eg: Ejs
 
