@@ -66,7 +66,7 @@ const signup = async (req, res) => {
                                                                 } else if (result4.status === true){
                                                                     let driver_id = result4.data[0];
 
-                                                                    let verification_code = gen_code(6);
+                                                                    let verification_code = gen_code(5);
 
                                                                     let verif_token = generate_access_token(driver_id.user_id, 'verification_code', 300);
 
@@ -111,7 +111,7 @@ const signup = async (req, res) => {
                                                                     } else if (result4.status === true){
                                                                         let driver_id = result4.data[0];
 
-                                                                        let verification_code = gen_code(6);
+                                                                        let verification_code = gen_code(5);
 
                                                                         let verif_token = generate_access_token(driver_id.user_id, 'verification_code', 300);
 
