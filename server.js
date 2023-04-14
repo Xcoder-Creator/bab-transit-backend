@@ -7,8 +7,13 @@ const url = require('url');
 const student_event = require('./ws_controller/student_event.ws');
 const { WebSocketServer } = require('ws');
 const driver_event = require('./ws_controller/driver_event.ws');
+const cors = require('cors');
 
 const app = express(); // Use the express module
+
+app.use(cors({
+  origin: 'http://localhost:8100'
+}))
 
 app.set('view engine', 'ejs'); // Register view engine of choice. Eg: Ejs
 
