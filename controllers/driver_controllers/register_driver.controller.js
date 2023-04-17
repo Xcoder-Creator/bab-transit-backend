@@ -36,7 +36,7 @@ const signup = async (req, res) => {
                             if (plate_number.length >= 5){
                                 if (user_name.length <= 360){
                                     if (user_gender === 'male' || user_gender === 'female'){
-                                        if (vehicle === '1' && vehicle === '2'){
+                                        if (vehicle === 1 || vehicle === 2){
                                             let result1 = await db_query.check_student_email(user_email);
 
                                             if (result1.status === false){
@@ -60,7 +60,7 @@ const signup = async (req, res) => {
                                                                 if (result3.data.length === 0){
                                                                     let hashed_password = bcrypt.hashSync(user_password, 10);
 
-                                                                    let result4 = await db_query.create_new_driver_account(user_email, hashed_password, user_phone_no, plate_number, user_name, user_gender, (vehicle === '1') ? 'keke' : 'ambulance', 3, 1, 'https://res.cloudinary.com/dtsj6fhcd/image/upload/v1677803279/assets_and_images/1607134320_avatar_mealik.jpg', null, 0, 0);
+                                                                    let result4 = await db_query.create_new_driver_account(user_email, hashed_password, user_phone_no, plate_number, user_name, user_gender, (vehicle === 1) ? 'keke' : 'ambulance', 3, 1, 'https://res.cloudinary.com/dtsj6fhcd/image/upload/v1677803279/assets_and_images/1607134320_avatar_mealik.jpg', null, 0, 0);
 
                                                                     if (result4.status === false){
                                                                         res.statusCode = 400;
@@ -105,7 +105,7 @@ const signup = async (req, res) => {
                                                                     } else if (password_exist_count === 0){
                                                                         let hashed_password = bcrypt.hashSync(user_password, 10);
 
-                                                                        let result4 = await db_query.create_new_driver_account(user_email, hashed_password, user_phone_no, plate_number, user_name, user_gender, (vehicle === '1') ? 'keke' : 'ambulance', 3, 1, 'https://res.cloudinary.com/dtsj6fhcd/image/upload/v1677803279/assets_and_images/1607134320_avatar_mealik.jpg', null, 0, 0);
+                                                                        let result4 = await db_query.create_new_driver_account(user_email, hashed_password, user_phone_no, plate_number, user_name, user_gender, (vehicle === 1) ? 'keke' : 'ambulance', 3, 1, 'https://res.cloudinary.com/dtsj6fhcd/image/upload/v1677803279/assets_and_images/1607134320_avatar_mealik.jpg', null, 0, 0);
 
                                                                         if (result4.status === false){
                                                                             res.statusCode = 400;
