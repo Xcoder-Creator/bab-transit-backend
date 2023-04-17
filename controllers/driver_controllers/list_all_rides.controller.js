@@ -108,8 +108,8 @@ const list_all_rides = async (req, res) => {
                                         res.json({ err_msg: null, result: all_new_rides, succ_msg: 'All rides fetched successfully', res_code: 200 });
                                     }
                                 } else {
-                                    res.statusCode = 404;
-                                    res.json({ err_msg: 'User does not exist', result: null, succ_msg: null, res_code: 404 });
+                                    res.statusCode = 200;
+                                    res.json({ err_msg: null, result: [], succ_msg: 'All rides fetched successfully', res_code: 200 });
                                 }
                             }
                         } else {
