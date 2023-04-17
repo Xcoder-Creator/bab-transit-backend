@@ -66,7 +66,7 @@ const verify_account = async (req, res) => {
                                                 res.statusCode = 400;
                                                 res.json({ err_msg: 'An error just occured, Try again later', result: null, succ_msg: null, res_code: 400 }); 
                                             } else if (result4.status === true){
-                                                let user_name = result4.data[0].student_name;
+                                                let user_name = result4.data[0].driver_name;
                                                 let profile_image = result4.data[0].profile_image;
                                                 
                                                 res.statusCode = 200;
