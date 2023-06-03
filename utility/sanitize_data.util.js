@@ -1,5 +1,6 @@
 // Sanitize data
 let sanitize_data = (data) => {
+    console.log(data);
     return data.split('"').join('').replace(/^[ ]+|[ ]+$/g, '').trim(); // Return sanitized data
 }
 //-------------------------

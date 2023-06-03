@@ -26,13 +26,13 @@ let mail_service = (mail_type, reciever_address, subject_title, plain_mail_text,
             `
         }
 
-        transporter.sendMail(mailData, (err, info) => {
-            if (err){
-                console.log(err);
-            } else {
+        transporter.sendMail(mailData)
+            .then(info => {
                 console.log(info);
-            }
-        });
+            })
+            .catch(err => {
+                console.log(err);
+            });
     } 
 }
 //-----------------------------------------------
