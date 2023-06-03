@@ -1,4 +1,4 @@
-const db_query = require('../../models/db_model'); // Import database model
+const db_query = require('../../models/db_model'); // Import db model
 const sanitize_data = require('../../utility/sanitize_data.util'); // Import sanitize data
 const response_headers = require('../../utility/response_headers.util'); // Import response headers
 const card_validation = require('../../utility/card_validation.util'); // Import card validation
@@ -17,11 +17,11 @@ const keke_book_ride = async (req, res) => {
         let form_data = req.body; // Form data from the frontend
 
         // Check if the appropriate request parameters are set
-        if (form_data.current_location && form_data.dropoff_location && form_data.vehicle_type && form_data.driver_id && form_data.arrival_time && form_data.ride_time && form_data.card_type && form_data.card_no && form_data.card_exp_month && form_data.card_exp_year && form_data.card_cvv){
+        if (form_data.current_location && form_data.dropoff_location && form_data.vehicle_type && form_data.driver_id && form_data.arrival_time && form_data.ride_time && form_data.card_type && form_data.card_no && form_data.exp_date && form_data.card_cvv){
 
             // Variables to hold form data individually and remove any quotes contained in them from left to right
             // and also remove leading and trailing whitespaces
-            var current_location = sanitize_data(form_data.current_location);
+            var current_location = form_data.current_location;
             var drop_off_location = parseInt(form_data.dropoff_location);
             var vehicle_type = sanitize_data(form_data.vehicle_type).toLowerCase();
             var driver_id = parseInt(form_data.driver_id);
@@ -29,16 +29,15 @@ const keke_book_ride = async (req, res) => {
             var ride_time = parseInt(form_data.ride_time);
             var card_type = parseInt(form_data.card_type);
             var card_no = form_data.card_no;
-            var card_exp_month = parseInt(form_data.card_exp_month);
-            var card_exp_year = parseInt(form_data.card_exp_year);
-            var card_cvv = form_data.card_cvv;
+            var card_exp_date = sanitize_data(form_data.exp_date);
+            var card_cvv = sanitize_data(form_data.card_cvv);
             //-------------------------------------------------------------------
             
             let auth_token = validate_auth_header(req.headers['authorization']); // Validate the authorization header
 
             if (auth_token == null){
                 res.statusCode = 400;
-                res.json({ err_msg: 'Invalid credentials', result: null, succ_msg: null, res_code: 400 });
+                res.json({ err_msg: 'Invalid credentials1', result: null, succ_msg: null, res_code: 400 });
             } else {
                 let decrypted_auth_token;
                 let check = true;
@@ -157,7 +156,7 @@ const keke_book_ride = async (req, res) => {
                                                                                         let card_valid = card_validation(card_type_value, card_no);
 
                                                                                         if (card_valid === true){
-                                                                                            let exp_date_validation = card_exp_date_validation(card_exp_month, card_exp_year);
+                                                                                            let exp_date_validation = card_exp_date_validation(card_exp_date);
                                                                                             if (exp_date_validation.state === true){
                                                                                                 let exp_date = exp_date_validation.date;
 
@@ -166,19 +165,19 @@ const keke_book_ride = async (req, res) => {
                                 
                                                                                                     if (result4.status === false){
                                                                                                         res.statusCode = 400;
-                                                                                                        res.json({ err_msg: 'An error just occured, Try again later', result: null, succ_msg: null, res_code: 400 });
+                                                                                                        res.json({ err_msg: 'Card details must be unique', result: null, succ_msg: null, res_code: 400 });
                                                                                                     } else if (result4.status === true){
                                                                                                         let result5 = await db_query.create_keke_ride(student_id, driver_id, current_location, drop_off_location, vehicle_type, 0, 1, 4, 0);
                                 
                                                                                                         if (result5.status === false){
                                                                                                             res.statusCode = 400;
-                                                                                                            res.json({ err_msg: 'An error just occured, Try again later', result: null, succ_msg: null, res_code: 400 });
+                                                                                                            res.json({ err_msg: 'An error just occured, Try again later2', result: null, succ_msg: null, res_code: 400 });
                                                                                                         } else if (result5.status === true){
                                                                                                             let result6 = await db_query.get_all_driver_details(driver_id);
                         
                                                                                                             if (result6.status === false){
                                                                                                                 res.statusCode = 400;
-                                                                                                                res.json({ err_msg: 'An error just occured, Try again later', result: null, succ_msg: null, res_code: 400 });
+                                                                                                                res.json({ err_msg: 'An error just occured, Try again later3', result: null, succ_msg: null, res_code: 400 });
                                                                                                             } else if (result6.status === true){
                                                                                                                 if (result6.data.length > 0 && result6.data.length === 1){
                                                                                                                     let driver_account_balance = result6.data[0].account_balance;
@@ -189,7 +188,7 @@ const keke_book_ride = async (req, res) => {
                                                     
                                                                                                                     if (result7.status === false){
                                                                                                                         res.statusCode = 400;
-                                                                                                                        res.json({ err_msg: 'An error just occured, Try again later', result: null, succ_msg: null, res_code: 400 });
+                                                                                                                        res.json({ err_msg: 'An error just occured, Try again later4', result: null, succ_msg: null, res_code: 400 });
                                                                                                                     } else if (result7.status === true){
                                                                                                                         res.statusCode = 200;
                                                                                                                         res.json({ err_msg: null, result: { arrival_time: arrival_time - 1 }, succ_msg: 'Your keke ride has been booked successfully', res_code: 200 });

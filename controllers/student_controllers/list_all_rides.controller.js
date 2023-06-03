@@ -37,6 +37,8 @@ const list_all_rides = async (req, res) => {
                         res.statusCode = 400;
                         res.json({ err_msg: 'An error just occured, Try again later', result: null, succ_msg: null, res_code: 400 });
                     } else if (result1.status === true){
+                        let student_name = result1.data[0].student_name;
+
                         if (result1.data.length > 0 && result1.data.length === 1){
                             let result2 = await db_query.get_all_student_available_rides(student_id);
     
@@ -85,17 +87,32 @@ const list_all_rides = async (req, res) => {
 
                                         let date_time = ride.ride_booked_at;
 
-                                        let data = {
-                                            id: i,
-                                            ride_id: ride_id,
-                                            current_ride_state: current_ride_state,
-                                            ride_vehicle: ride_vehicle,
-                                            current_location: current_location,
-                                            destination: destination,
-                                            date_time: date_time
-                                        }
+                                        let driver_id = ride.driver_for_ride;
 
-                                        all_new_rides.push(data);
+                                        let result3x = await db_query.get_all_driver_details(driver_id);
+    
+                                        if (result3x.status === false){
+                                            res.statusCode = 400;
+                                            res.json({ err_msg: 'An error just occured, Try again later3', result: null, succ_msg: null, res_code: 400 });
+                                        } else if (result3x.status === true){
+                                            let driver_name = result3x.data[0].driver_name;
+                                            let driver_phone_no = result3x.data[0].driver_phone_no;
+
+                                            let data = {
+                                                id: i,
+                                                ride_id: ride_id,
+                                                current_ride_state: current_ride_state,
+                                                ride_vehicle: ride_vehicle,
+                                                current_location: current_location,
+                                                destination: destination,
+                                                date_time: date_time,
+                                                driver_name: driver_name,
+                                                driver_phone_no: driver_phone_no,
+                                                student_name: student_name
+                                            }
+    
+                                            all_new_rides.push(data);
+                                        }
                                     }
 
                                     let result3 = await db_query.update_all_student_rides(student_id);

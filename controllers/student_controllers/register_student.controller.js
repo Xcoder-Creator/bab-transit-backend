@@ -86,7 +86,7 @@ const signup = async (req, res) => {
                                                                                 } else if (result4.status === true){
                                                                                     let student_id = result4.data[0];
 
-                                                                                    let verification_code = gen_code(5);
+                                                                                    let verification_code = gen_code(4);
 
                                                                                     let verif_token = generate_access_token(student_id.user_id, 'verification_code', 300);
 
@@ -131,7 +131,7 @@ const signup = async (req, res) => {
                                                                                     } else if (result4.status === true){
                                                                                         let student_id = result4.data[0];
 
-                                                                                        let verification_code = gen_code(5);
+                                                                                        let verification_code = gen_code(4);
 
                                                                                         let verif_token = generate_access_token(student_id.user_id, 'verification_code', 300);
 
@@ -204,12 +204,12 @@ const signup = async (req, res) => {
             //-------------------------------------------------------------------
         } else {
             res.statusCode = 400;
-            res.json({ err_msg: 'Invalid credentials', result: null, succ_msg: null, res_code: 400 });
+            res.json({ err_msg: 'Invalid credentials1', result: null, succ_msg: null, res_code: 400 });
         }
         //--------------------------------------------------------------
     } else {
         res.statusCode = 400;
-        res.json({ err_msg: 'Invalid credentials', result: null, succ_msg: null, res_code: 400 });
+        res.json({ err_msg: 'Invalid credentials2', result: null, succ_msg: null, res_code: 400 });
     }
     //--------------------------------------------
 }
