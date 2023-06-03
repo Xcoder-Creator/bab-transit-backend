@@ -64,7 +64,7 @@ const login = async (req, res) => {
                                         res.statusCode = 400;
                                         res.json({ err_msg: 'An error just occured, Try again later', result: null, succ_msg: null, res_code: 400 }); 
                                     } else if (result1x.status === true){
-                                        let verification_code = gen_code(6);
+                                        let verification_code = gen_code(4);
 
                                         let verif_token = generate_access_token(student_id, 'verification_code', 300);
 
