@@ -77,11 +77,13 @@ const verify_account = async (req, res) => {
                                 }
                             });
                         } else {
+                            console.log(verification_code);
                             res.statusCode = 400;
                             res.json({ err_msg: 'Invalid verification code', result: null, succ_msg: null, res_code: 400 }); 
                         }
                     }
                 } else {
+                    console.log(verification_code);
                     res.statusCode = 400;
                     res.json({ err_msg: 'Invalid verification code', result: null, succ_msg: null, res_code: 400 }); 
                 }
